@@ -5,46 +5,29 @@
 
 #include "philo.h"
 
-static bool	contains_digits(char *str)
+int ft_atoi(char *str)
 {
-	int	i;
+    	unsigned long long res = 0;
+    	int i = 0;
 
-	i = 0;
-	if (str[i] == '+')
-		i++;
-	while (str[i])
+    	// Skip whitespace
+    	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32);
+			i++;
+	// Convert digits to integer
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-static int	ft_atoi(char *str)
-{
-	int	i;
-	int	flag;
-	unsigned long long int	res;
-
-	i = 0;
-	res = 0;
-	flag = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '+')
-		i++;
-	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
-	{
-		flag = 1;
 		res = res * 10 + (str[i] - '0');
-		i++;
-	}
-	if (flag == 0)
-		return (EXIT_FAILURE);
-	if (res > INT_MAX)
-		return (EXIT_FAILURE);
-	return ((int)res);
+		// Check for overflow
+        	if (res > INT_MAX)
+			return -1; // Indicate overflow error
+        	i++;
+    	}
+
+    	// If there are trailing characters or no digits at all
+    	if (str[i] != '\0')
+        	return -1; // Indicate invalid input
+
+    	return (int)res;
 }
 
 bool	is_valid(int ac, char **av)
@@ -55,13 +38,13 @@ bool	is_valid(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (!contains_digits(av[i]))
-			return (EXIT_FAILURE);
 		//check if params are valid
 		nb = ft_atoi(av[i]);
+		if (nb < 0)
+			return (false);
 		//check if the fisrst param is valid
-		if ((i == 1 && nb <= 0) || (i != 1 && nb < 0))
-			return (EXIT_FAILURE);
+		if (i == 1 && nb <= 0)
+			return (false);
 		i++;
 	}
 	return (true);
