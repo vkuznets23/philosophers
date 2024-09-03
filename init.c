@@ -13,7 +13,7 @@ int init_forks(t_table *table)
     i = 0;
     while (i < table->nb_philos) 
     {
-        if (pthread_mutex_init(&table->forks[i++], NULL) != 0) 
+        if (pthread_mutex_init(&table->forks[i], NULL) != 0) 
 	{
             // Cleanup on failure (let's say it accures after a couple succesful ones
             while (i > 0)
@@ -21,6 +21,7 @@ int init_forks(t_table *table)
             free(table->forks);
             return -1; // Indicate failure
         }
+	i++;
     }
     return 0; // Success
 }
@@ -42,12 +43,25 @@ int	init_philosophers(t_table *table)
 		table->philos[i].fork_r = &table->forks[(i + 1) % table->nb_philos];
 
 		//printing to check
-		printf("Philosopher %zu initialized:\n", table->philos[i].id);
+		/*printf("Philosopher %zu initialized:\n", table->philos[i].id);
         	printf("  Fork Left: %ld\n", table->philos[i].fork_l - table->forks);
-       	 	printf("  Fork Right: %ld\n", table->philos[i].fork_r - table->forks);
+       	 	printf("  Fork Right: %ld\n", table->philos[i].fork_r - table->forks);*/
 		i++;
 	}
 	return 0;
+}
+
+int	init_table_mutexes(t_table *table)
+{
+	// Initialize the mutexes for the table's state and printing
+	if (pthread_mutex_init(&table->locks, NULL) != 0)
+		return -1; // Indicate failure
+	if (pthread_mutex_init(&table->print_locks, NULL) != 0)
+	{
+		pthread_mutex_destroy(&table->locks); // Clean up previous mutex
+		return -1; // Indicate failure
+	}
+	return 0; // Success
 }
 
 /* init_table:
@@ -81,6 +95,13 @@ int	init_table(int ac, char **av, t_table *table)
         	free(table);
         	return -1; // Handle fork initialization failure
    	 }
+
 	//also need to initialize mutexes for locks and print_locks!!!!
+	if (init_table_mutexes(table) != 0)
+	{
+		free(table->philos);
+		free(table->forks);
+		return -1; // Handle mutex initialization failure
+	}
 	return (0);
 }

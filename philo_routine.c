@@ -16,7 +16,8 @@
 size_t	get_time()
 {
 	struct	timeval tv;
-	long	calcualtion;
+	long	calculation;
+
 	gettimeofday(&tv, NULL);
 	calculation = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return ((size_t)calculation);
@@ -36,19 +37,19 @@ int	ft_wait(size_t ms, t_table *table)
 
 	waiting_strt = get_time();//records the time when the wait began
 	i = 0;
-	while((get_time(void) - waiting_strt) < ms)//continually checks how much time has passed since ft_wait began
+	while((get_time() - waiting_strt) < ms)//continually checks how much time has passed since ft_wait began
 	{
 		if (i % 200 == 0)
 		{
-			pthread_mutex_lock(&table->lock);
+			pthread_mutex_lock(&table->locks);
 			if (table->dead_or_full == 1)//true
 			{
-				pthread_mutex_unlock(&table->lock);//it doesnt need a fork anymore
+				pthread_mutex_unlock(&table->locks);//it doesnt need a fork anymore
 				return (0);//stop and exit 0-because of unexpected behaviour
 			}
-			pthread_mutex_unlock(&table->lock);//it doesnt need a fork anymore
+			pthread_mutex_unlock(&table->locks);//it doesnt need a fork anymore
 		}
-		usleep(400);
+		usleep(500);
 		i++;
 	}
 	return (1);
@@ -67,19 +68,20 @@ int	time_to_stop_sim(t_philo *philo)
 
 }
 
-void	ft_prnt_lock(t_philo *philo, const char *activity);
+int	ft_prnt_lock(t_philo *philo, const char *activity)
 {
 	size_t	current_time;
 
 	current_time = get_time();
 	pthread_mutex_lock(&philo->table->print_locks);//need to check if someone is dead>???
-	if (time_to_stop_sim(philo))
+	if (philo->table->dead_or_full)
 	{
 		pthread_mutex_unlock(&philo->table->print_locks);
-		return ;
+		return 0;
 	}
-	ft_printf("%zu %zu %s", current_time - philo->table->start, philo->id, activity);
+	printf("%zu %zu %s\n", current_time - philo->table->start, philo->id, activity);
 	pthread_mutex_unlock(&philo->table->print_locks);
+	return (1);
 }
 
 int	grab_forks(t_philo *philo)
@@ -96,19 +98,22 @@ int	grab_forks(t_philo *philo)
 
 	if (time_to_stop_sim(philo))// == 1
 		return (0);//we need to exit 
-	pthread_mutex_lock(&philo->fork_l);
-	ft_prnt_lock(philo, "has taken a fork");
-	if (time_to_stop_sim(philo))// == 1
+	pthread_mutex_lock(philo->fork_l);
+	if (!ft_prnt_lock(philo, "has taken a fork"))
 	{
-		pthread_mutex_unlock(&philo->fork_l);//??????
+		pthread_mutex_unlock(philo->fork_l);
 		return (0);
 	}
-	pthread_mutex_lock(&philo->fork_r);
-	ft_prnt_lock(philo, "has taken a fork");
-	if (time_to_stop_sim(philo))// == 1
+	if (time_to_stop_sim(philo) || philo->table->nb_philos == 1)// == 1 
 	{
-		pthread_mutex_unlock(&philo->fork_l);
-		pthread_mutex_unlock(&philo->fork_r);
+		pthread_mutex_unlock(philo->fork_l);//??????
+		return (0);
+	}
+	pthread_mutex_lock(philo->fork_r);
+	if (!ft_prnt_lock(philo, "has taken a fork"))
+	{
+		pthread_mutex_unlock(philo->fork_l);
+		pthread_mutex_unlock(philo->fork_r);
 		return (0);
 	}
 	return (1);//success
@@ -121,15 +126,21 @@ int	eating_time(t_philo *philo)
 	//Update the eating status and last time eaten
 	philo->table->no_eat++;
 	philo->table->lst_eating = get_time();
-	//display the activity of the philosopher.
-	ft_prnt_lock(philo, "is eating");
-	//simulate eating time using wait
-	ft_wait(philo->table->time_to_eat, philo);
 	//Unlock the philosopher's mutex
 	pthread_mutex_unlock(&philo->table->locks);
+
+	//display the activity of the philosopher.
+	ft_prnt_lock(philo, "is eating");
+
+	//simulate eating time using wait
+	ft_wait(philo->table->time_to_eat, philo->table);
+
+	pthread_mutex_unlock(philo->fork_l);
+	pthread_mutex_unlock(philo->fork_r);
+	return (1);
 }
 
-void	*philo_routine(void *arg)//it sould take my philo struct
+void	*philo_routine(void *arg) //it sould take my philo struct
 {
 	t_philo	*philo;
 
@@ -140,7 +151,11 @@ void	*philo_routine(void *arg)//it sould take my philo struct
 	{
 		//grabing forks
 		//eating
-		//sleeping or thinking 
-	}
+		//sleeping or thinking
+		if (!grab_forks(philo))//no success
+			break ;//something goes wrong
+		eating_time(philo);
 
+	}
+	return (0);
 }

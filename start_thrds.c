@@ -25,7 +25,7 @@ int	create_thread(t_table *table, int i)
 	while (i < table->nb_philos)
 	{
 		if (pthread_create(&table->philos[i].thread, NULL, &philo_routine, &table->philos[i]) != 0)
-			return (-1); // + i need terninate this shit
+			return (-1); // + i need terninate this
 		i++;
 	}
 	return (0);
@@ -51,15 +51,15 @@ int	join_thread(t_table *table, int i)
 	return (0);
 }
 
-int	ft_create_threads(t_table *table)
+int	ft_start_threads(t_table *table)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < table->nb_philos)
 	{
-		if (create_thread(table, i) != 0)
-			return (-1); //mistake
+		if (create_thread(table, i))
+			return (1); //mistake
 		i++;
 	}
 	return (0);
@@ -72,8 +72,8 @@ int	ft_join_threads(t_table *table)
 	i = 0;
 	while (i < table->nb_philos)
 	{
-		if (join_thread(table, i) != 0)
-			return (-1); //mistake
+		if (join_thread(table, i))
+			return (1); //mistake
 		i++;
 	}
 	return (0);
