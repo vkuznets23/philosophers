@@ -2,6 +2,7 @@
 # define PHILO_H
 
 #include <limits.h>
+#include <sys/time.h> // for get time function
 #include <pthread.h> // for threads
 #include <stdlib.h> //so far for exits
 #include <stdio.h> // so fat for printf
@@ -26,8 +27,12 @@ typedef struct s_table
 	size_t	must_eat_count;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*locks;
-
+	pthread_mutex_t	*locks;//is locked when checking or modifying the philosopher's statei
+	pthread_mutex_t *print_locks;
+	int	dead_or_full;
+	size_t	no_eat;//?? mb need another mutex 
+	size_t	lst_eating;
+	size_t	start;//This variable holds the time when the simulation began. It allows you to know how much time has passed since the simulation started. 
 }	t_table;
 
 typedef struct s_philo
