@@ -20,7 +20,7 @@
 );*/
 
 
-int	create_thread(t_table *table, int i)
+/*int	create_thread(t_table *table, int i)
 {
 	while (i < table->nb_philos)
 	{
@@ -29,7 +29,7 @@ int	create_thread(t_table *table, int i)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 /*
    int pthread_join(
@@ -40,7 +40,7 @@ int	create_thread(t_table *table, int i)
     вы можете передать NULL.
 );*/
 
-int	join_thread(t_table *table, int i)
+/*int	join_thread(t_table *table, int i)
 {
 	while (i < table->nb_philos)
 	{
@@ -49,7 +49,7 @@ int	join_thread(t_table *table, int i)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int	ft_start_threads(t_table *table)
 {
@@ -72,7 +72,7 @@ int	ft_join_threads(t_table *table)
 	i = 0;
 	while (i < table->nb_philos)
 	{
-		if (join_thread(table, i))
+		if (pthread_join(table->philos[i].thread, NULL) != 0)
 			return (1); //mistake
 		i++;
 	}
