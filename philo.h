@@ -7,7 +7,6 @@
 #include <pthread.h> // for threads
 #include <stdlib.h> //so far for exits
 #include <stdio.h> // so fat for printf
-#include "printf/ft_printf.h"
 
 /******************************************************************************
 *                                 Structures                                  *
@@ -70,7 +69,10 @@ int	ft_wait(size_t ms, t_table *table);
 int	time_to_stop_sim(t_philo *philo);
 int	ft_prnt_lock(t_philo *philo, const char *activity);
 int	grab_forks(t_philo *philo);
-int	eating_time(t_philo *philo);
+void	eating_time(t_philo *philo);
 void	*philo_routine(void *arg);
+
+//terminate
+void	ft_terminate(t_table *table);
 
 #endif

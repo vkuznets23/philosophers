@@ -29,6 +29,9 @@ int	main(int ac, char **av)
 	// Start the philosopher threads
 	if (ft_start_threads(&table))
 		return (-1);
-
+	
+	if (ft_join_threads(&table))
+		return (-1);
+	ft_terminate(&table);
 	return (0);
 }

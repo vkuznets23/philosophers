@@ -119,7 +119,7 @@ int	grab_forks(t_philo *philo)
 	return (1);//success
 }
 
-int	eating_time(t_philo *philo)
+void	eating_time(t_philo *philo)
 {
 	//lock philosopher's state
 	pthread_mutex_lock(&philo->table->locks);
@@ -130,15 +130,33 @@ int	eating_time(t_philo *philo)
 	pthread_mutex_unlock(&philo->table->locks);
 
 	//display the activity of the philosopher.
-	ft_prnt_lock(philo, "is eating");
+	if (!ft_prnt_lock(philo, "is eating"))
+	{
+		pthread_mutex_unlock(philo->fork_l);
+		pthread_mutex_unlock(philo->fork_r);
+		return ;
+	}
 
 	//simulate eating time using wait
 	ft_wait(philo->table->time_to_eat, philo->table);
 
 	pthread_mutex_unlock(philo->fork_l);
 	pthread_mutex_unlock(philo->fork_r);
+}
+
+int	sleeping_thinking(t_philo *philo)
+{
+	if (!ft_prnt_lock(philo, "is sleeping"))
+		return (0);
+	if (!ft_wait(philo->table->time_to_sleep, philo->table))
+		return (0);
+	if (!ft_prnt_lock(philo, "is thinking"))
+		return (0);
+	if (!ft_wait(philo->table->time_to_think, philo->table))
+		return (0);
 	return (1);
 }
+
 
 void	*philo_routine(void *arg) //it sould take my philo struct
 {
@@ -155,7 +173,8 @@ void	*philo_routine(void *arg) //it sould take my philo struct
 		if (!grab_forks(philo))//no success
 			break ;//something goes wrong
 		eating_time(philo);
-
+		if (!sleeping_thinking(philo))
+			break ;
 	}
 	return (0);
 }
