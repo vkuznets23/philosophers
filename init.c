@@ -4,7 +4,7 @@
 
 int init_forks(t_table *table)
 {
-    unsigned int i;
+    size_t	i;
 
     table->forks = malloc(sizeof(pthread_mutex_t) * table->nb_philos);
     if (!table->forks)
@@ -13,7 +13,7 @@ int init_forks(t_table *table)
     i = 0;
     while (i < table->nb_philos) 
     {
-        if (pthread_mutex_init(&table->forks[i], NULL) != 0) 
+        if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 	{
             // Cleanup on failure (let's say it accures after a couple succesful ones
             while (i > 0)
@@ -44,10 +44,10 @@ int	init_philosophers(t_table *table)
 		table->philos[i].fork_r = &table->forks[(i + 1) % table->nb_philos];
 		table->philos[i].lst_eating = table->start;
 
-		//printing to check
-		/*printf("Philosopher %zu initialized:\n", table->philos[i].id);
-        	printf("  Fork Left: %ld\n", table->philos[i].fork_l - table->forks);
-       	 	printf("  Fork Right: %ld\n", table->philos[i].fork_r - table->forks);*/
+		/*printf("Philosopher %zu Left Fork: %p, Right Fork: %p\n",
+       		table->philos[i].id, 
+		(void *)table->philos[i].fork_l,
+       		(void *)table->philos[i].fork_r);*/
 		i++;
 	}
 	return 0;
@@ -83,11 +83,7 @@ int	init_table(int ac, char **av, t_table *table)
 	table->start = get_time();
 	if (ac == 6)
 		table->must_eat_count = ft_atoi(av[5]);
-	if (init_philosophers(table) != 0)
-    	{
-        	free(table);
-        	return -1; // Handle philosopher initialization failure
-    	}
+	
 	// Initialize forks or other necessary components here
     	if (init_forks(table) != 0)
    	 {
@@ -95,6 +91,11 @@ int	init_table(int ac, char **av, t_table *table)
         	free(table);
         	return -1; // Handle fork initialization failure
    	 }
+	if (init_philosophers(table) != 0)
+    	{
+        	free(table);
+        	return -1; // Handle philosopher initialization failure
+    	}
 
 	//also need to initialize mutexes for locks and print_locks!!!!
 	if (init_table_mutexes(table) != 0)

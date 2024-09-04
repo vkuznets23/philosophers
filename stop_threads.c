@@ -5,7 +5,7 @@
 //check for fuleness 
 //
 
-void	ft_stop_simulation(t_table *table)
+int	ft_stop_simulation(t_table *table)
 {
 	size_t	i;
 
@@ -18,21 +18,28 @@ void	ft_stop_simulation(t_table *table)
 		{
 			table->dead_or_full = 1;
 			if (table->no_full == table->nb_philos)
-                		printf("Every philosopher ate %ld times\n", table->must_eat_count);
+			{
+				pthread_mutex_lock(&table->print_locks);
+                		printf("Every philosopher ate %zu times\n", table->must_eat_count);
+				pthread_mutex_unlock(&table->print_locks);
+			}
 			else
-				printf("%zu %ld died\n", get_time() - table->start, i + 1);
+				ft_prnt_lock(table->philos, "died");
+				//printf("%zu %ld died\n", get_time() - table->start, i + 1);
             		pthread_mutex_unlock(&table->locks);
-            		return ;
+            		return (1);
 		}
 		i++;
             	pthread_mutex_unlock(&table->locks);
 	}
+	return (0);//nobody dies
 }
 
 void	ft_stop_thrds(t_table *table)
 {
 	while (1)
 	{
-		ft_stop_simulation(table)
+		if (ft_stop_simulation(table))
+			break ;
 	}
 }

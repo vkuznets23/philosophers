@@ -97,7 +97,7 @@ int	grab_forks(t_philo *philo)
 	// if any troubles unlock both of them
 
 	if (time_to_stop_sim(philo))// == 1
-		return (0);//we need to exit 
+		return (0);//we need to exit
 	pthread_mutex_lock(philo->fork_l);
 	if (!ft_prnt_lock(philo, "has taken a L fork"))
 	{
