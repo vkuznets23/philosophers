@@ -33,7 +33,6 @@ void	ft_stop_thrds(t_table *table)
 {
 	while (1)
 	{
-		if (ft_stop_simulation(table))
-			break ;
+		ft_stop_simulation(table)
 	}
 }
