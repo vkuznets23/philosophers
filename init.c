@@ -39,8 +39,10 @@ int	init_philosophers(t_table *table)
 		//Each philosopher has a number ranging from 1 to number_of_philosophers.
 		table->philos[i].id = i + 1; 
 		table->philos[i].table = table;
+		table->philos[i].no_ate = 0;
 		table->philos[i].fork_l = &table->forks[i];
 		table->philos[i].fork_r = &table->forks[(i + 1) % table->nb_philos];
+		table->philos[i].lst_eating = table->start;
 
 		//printing to check
 		/*printf("Philosopher %zu initialized:\n", table->philos[i].id);
@@ -76,10 +78,8 @@ int	init_table(int ac, char **av, t_table *table)
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
-	table->must_eat_count = -1;
+	table->must_eat_count = 0;
 	table->dead_or_full = 0;
-	table->no_eat = 0;
-	table->lst_eating = 0;
 	table->start = get_time();
 	if (ac == 6)
 		table->must_eat_count = ft_atoi(av[5]);

@@ -58,7 +58,7 @@ int	ft_start_threads(t_table *table)
 	i = 0;
 	while (i < table->nb_philos)
 	{
-		if (create_thread(table, i))
+		if (pthread_create(&table->philos[i].thread, NULL, &philo_routine, &table->philos[i]) != 0)
 			return (1); //mistake
 		i++;
 	}

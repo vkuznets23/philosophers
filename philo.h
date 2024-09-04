@@ -31,8 +31,7 @@ typedef struct s_table
 	pthread_mutex_t	locks;//is locked when checking or modifying the philosopher's statei
 	pthread_mutex_t print_locks;
 	int	dead_or_full;
-	size_t	no_eat;//?? mb need another mutex 
-	size_t	lst_eating;
+	size_t	no_full;
 	size_t	start;//This variable holds the time when the simulation began. It allows you to know how much time has passed since the simulation started. 
 }	t_table;
 
@@ -40,6 +39,8 @@ typedef struct s_philo
 {
 	pthread_t			thread;//kinda auto assigned 
 	size_t		id;
+	size_t		lst_eating;
+	size_t		no_ate;//?? mb need another mutex 
 	pthread_mutex_t		*fork_l;
 	pthread_mutex_t		*fork_r;
 	t_table				*table;
@@ -74,5 +75,6 @@ void	*philo_routine(void *arg);
 
 //terminate
 void	ft_terminate(t_table *table);
+void	ft_stop_thrds(t_table *table);
 
 #endif

@@ -99,7 +99,7 @@ int	grab_forks(t_philo *philo)
 	if (time_to_stop_sim(philo))// == 1
 		return (0);//we need to exit 
 	pthread_mutex_lock(philo->fork_l);
-	if (!ft_prnt_lock(philo, "has taken a fork"))
+	if (!ft_prnt_lock(philo, "has taken a L fork"))
 	{
 		pthread_mutex_unlock(philo->fork_l);
 		return (0);
@@ -110,7 +110,7 @@ int	grab_forks(t_philo *philo)
 		return (0);
 	}
 	pthread_mutex_lock(philo->fork_r);
-	if (!ft_prnt_lock(philo, "has taken a fork"))
+	if (!ft_prnt_lock(philo, "has taken a R fork"))
 	{
 		pthread_mutex_unlock(philo->fork_l);
 		pthread_mutex_unlock(philo->fork_r);
@@ -124,22 +124,27 @@ void	eating_time(t_philo *philo)
 	//lock philosopher's state
 	pthread_mutex_lock(&philo->table->locks);
 	//Update the eating status and last time eaten
-	philo->table->no_eat++;
-	philo->table->lst_eating = get_time();
+	philo->no_ate++;//calculate how many of then have eatten
+	philo->lst_eating = get_time();
 	//Unlock the philosopher's mutex
 	pthread_mutex_unlock(&philo->table->locks);
 
 	//display the activity of the philosopher.
-	if (!ft_prnt_lock(philo, "is eating"))
+	ft_prnt_lock(philo, "is eating");
+	/*if (!ft_prnt_lock(philo, "is eating"))
 	{
 		pthread_mutex_unlock(philo->fork_l);
 		pthread_mutex_unlock(philo->fork_r);
 		return ;
-	}
-
+	}*/
 	//simulate eating time using wait
 	ft_wait(philo->table->time_to_eat, philo->table);
+	pthread_mutex_lock(&philo->table->locks);
 
+	if (philo->no_ate == philo->table->must_eat_count)
+		philo->table->no_full++;// calculate how many of them are full
+
+	pthread_mutex_unlock(&philo->table->locks);
 	pthread_mutex_unlock(philo->fork_l);
 	pthread_mutex_unlock(philo->fork_r);
 }
@@ -152,8 +157,6 @@ int	sleeping_thinking(t_philo *philo)
 		return (0);
 	if (!ft_prnt_lock(philo, "is thinking"))
 		return (0);
-	if (!ft_wait(philo->table->time_to_think, philo->table))
-		return (0);
 	return (1);
 }
 
@@ -165,7 +168,7 @@ void	*philo_routine(void *arg) //it sould take my philo struct
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_wait(10, philo->table);
-	while (1)
+	while (1) 
 	{
 		//grabing forks
 		//eating
