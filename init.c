@@ -58,11 +58,6 @@ int	init_table_mutexes(t_table *table)
 	// Initialize the mutexes for the table's state and printing
 	if (pthread_mutex_init(&table->locks, NULL) != 0)
 		return -1; // Indicate failure
-	if (pthread_mutex_init(&table->print_locks, NULL) != 0)
-	{
-		pthread_mutex_destroy(&table->locks); // Clean up previous mutex
-		return -1; // Indicate failure
-	}
 	return 0; // Success
 }
 
@@ -79,6 +74,7 @@ int	init_table(int ac, char **av, t_table *table)
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
 	table->must_eat_count = 0;
+	table->no_full = 0;
 	table->dead_or_full = 0;
 	table->start = get_time();
 	if (ac == 6)

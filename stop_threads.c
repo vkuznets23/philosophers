@@ -15,7 +15,6 @@ void	ft_stop_simulation(t_table *table)
 		while (i < table->nb_philos)
 		{
 			pthread_mutex_lock(&table->locks);
-
 			//because get_time() is absolute current time
 			if (((get_time() - table->philos[i].lst_eating) >= (size_t)table->time_to_die)
 				|| ((table->must_eat_count != 0) && (table->no_full == table->nb_philos)))

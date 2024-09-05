@@ -68,14 +68,14 @@ int	time_to_stop_sim(t_philo *philo)
 
 int	ft_prnt_lock(t_philo *philo, const char *activity)
 {
-	pthread_mutex_lock(&philo->table->print_locks);//need to check if someone is dead>???
+	pthread_mutex_lock(&philo->table->locks);
 	if (philo->table->dead_or_full)
 	{
-		pthread_mutex_unlock(&philo->table->print_locks);
+		pthread_mutex_unlock(&philo->table->locks);
 		return 0;
 	}
 	printf("%zu %zu %s\n", get_time() - philo->table->start, philo->id, activity);
-	pthread_mutex_unlock(&philo->table->print_locks);
+	pthread_mutex_unlock(&philo->table->locks);
 	return (1);
 }
 

@@ -15,6 +15,5 @@ void	ft_terminate(t_table *table)
 	free(table->forks);
 	// Destroy the general locks
     	pthread_mutex_destroy(&table->locks);
-    	pthread_mutex_destroy(&table->print_locks);
 }
 
