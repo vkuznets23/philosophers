@@ -16,11 +16,9 @@
 size_t	get_time()
 {
 	struct	timeval tv;
-	long	calculation;
-
+	
 	gettimeofday(&tv, NULL);
-	calculation = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	return ((size_t)calculation);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 //This function waits for a specified number of milliseconds (ms) 
@@ -70,16 +68,13 @@ int	time_to_stop_sim(t_philo *philo)
 
 int	ft_prnt_lock(t_philo *philo, const char *activity)
 {
-	size_t	current_time;
-
-	current_time = get_time();
 	pthread_mutex_lock(&philo->table->print_locks);//need to check if someone is dead>???
 	if (philo->table->dead_or_full)
 	{
 		pthread_mutex_unlock(&philo->table->print_locks);
 		return 0;
 	}
-	printf("%zu %zu %s\n", current_time - philo->table->start, philo->id, activity);
+	printf("%zu %zu %s\n", get_time() - philo->table->start, philo->id, activity);
 	pthread_mutex_unlock(&philo->table->print_locks);
 	return (1);
 }
@@ -125,7 +120,9 @@ void	eating_time(t_philo *philo)
 	pthread_mutex_lock(&philo->table->locks);
 	//Update the eating status and last time eaten
 	philo->no_ate++;//calculate how many of then have eatten
+	
 	philo->lst_eating = get_time();
+	
 	//Unlock the philosopher's mutex
 	pthread_mutex_unlock(&philo->table->locks);
 

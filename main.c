@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 	// Start the philosopher threads
 	if (ft_start_threads(&table))
 		return (-1);
-	ft_stop_thrds(&table);	
+	ft_stop_simulation(&table);	
 	//let them all to be finished 
 	if (ft_join_threads(&table))
 		return (-1);

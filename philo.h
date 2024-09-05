@@ -75,6 +75,6 @@ void	*philo_routine(void *arg);
 
 //terminate
 void	ft_terminate(t_table *table);
-void	ft_stop_thrds(t_table *table);
+void	ft_stop_simulation(t_table *table);
 
 #endif

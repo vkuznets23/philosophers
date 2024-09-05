@@ -5,33 +5,6 @@
 
 #include "philo.h"
 
-/*int ft_atoi(char *str)
-{
-    	unsigned long long res = 0;
-    	int i = 0;
-
-    	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32);
-		i++;
-	if (str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10 + (str[i] - '0');
-		if (res > INT_MAX)
-           		 return -1; 
-		i++;
-    	}
-	printf("res = %llu\n", res);
-    	// If there are trailing characters or no digits at all
-    	if (str[i] != '\0')
-        	return -1; // Indicate invalid input
-    	return (int)res;
-}*/
-
-#include <stdio.h>
-#include <limits.h> // For INT_MAX
-#include <ctype.h>  // For isspace
-
 // Corrected ft_atoi function
 int ft_atoi(char *str)
 {
@@ -66,6 +39,19 @@ int ft_atoi(char *str)
 
     return (int)res;
 }
+
+/*size_t	ft_ptoi(char *str, size_t *num)
+{
+	size_t	res;
+
+	res = 0;
+	while ('0' <= *str && *str <= '9')
+		res = res * 10 + *str++ - 48;
+	if (*str || res == 0)
+		return (ft_usage(), 1);
+	*num = res;
+	return (num);
+}*/
 
 int	is_valid(int ac, char **av)
 {
