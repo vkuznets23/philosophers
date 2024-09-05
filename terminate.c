@@ -1,6 +1,12 @@
 
 #include "philo.h"
 
+/* ************************************************************************** */
+/* This function terminate whole process:                                     */
+/* 	destroy all fork mutexes and general mutex					      */
+/*	free space that was malloced for forks and philos		      */
+/* ************************************************************************** */
+
 void	ft_terminate(t_table *table)
 {
 	size_t	i;
@@ -13,7 +19,5 @@ void	ft_terminate(t_table *table)
 	}
 	free(table->philos);
 	free(table->forks);
-	// Destroy the general locks
-    	pthread_mutex_destroy(&table->locks);
+	pthread_mutex_destroy(&table->locks);
 }
-

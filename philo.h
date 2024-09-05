@@ -2,7 +2,7 @@
 # define PHILO_H
 
 #include <limits.h>
-#include <unistd.h> // for asleep function
+#include <unistd.h> // for usleep function
 #include <sys/time.h> // for get time function
 #include <pthread.h> // for threads
 #include <stdlib.h> //so far for exits

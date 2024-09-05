@@ -128,12 +128,6 @@ void	eating_time(t_philo *philo)
 
 	//display the activity of the philosopher.
 	ft_prnt_lock(philo, "is eating");
-	/*if (!ft_prnt_lock(philo, "is eating"))
-	{
-		pthread_mutex_unlock(philo->fork_l);
-		pthread_mutex_unlock(philo->fork_r);
-		return ;
-	}*/
 	//simulate eating time using wait
 	ft_wait(philo->table->time_to_eat, philo->table);
 	pthread_mutex_lock(&philo->table->locks);
