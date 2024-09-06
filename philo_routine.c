@@ -1,51 +1,53 @@
 
 #include "philo.h"
 
-//their routine consist of
-// -eating (for eating i also need to grab a fork)
-//	so i created mutexes i need to unlock forks at some point
-// -sleaping
-// -thinking
-
-//i also need a time to stop to 
-//	1) avoid infinity loop 
-//	2)To manage system resources and prevent excessive consumption
-//	
+/* ************************************************************************** */
+/* Philosophers' routine consist of:                                          */
+/* 	eating (for this they need to grab a fork)                            */
+/*	sleaping                                                              */
+/*	thinking                                                              */
+/* ************************************************************************** */
 
 //This function returns the current time in milliseconds
 size_t	get_time()
 {
 	struct	timeval tv;
+	size_t	calculation;
 	
 	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	calculation = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return (calculation);
 }
 
-//This function waits for a specified number of milliseconds (ms) 
-//while periodically checking whether the philosopher's state has changed 
-//to "dead" or "full". If the philosopher is dead or full, it stops waiting early.
+/* ************************************************************************** */
+/* This function waits for a specified number of milliseconds (ms)            */
+/* while periodically checking whether the philosopher's state has changed    */ 
+/* to "dead" or "full". If the philosopher is dead or full, it stops early    */
+/*									      */
+/* waiting_strt records the time when waiting began 			      */
+/* while loop (get_time() - waiting_strt) < ms continually checks             */
+/* how much time has passed since ft_wait began				      */
+/* ************************************************************************** */
 
-// int pthread_mutex_lock(pthread_mutex_t *mutex);
-//int pthread_mutex_unlock(pthread_mutex_t *mutex);
 
 int	ft_wait(size_t ms, t_table *table)
 {
 	size_t	waiting_strt;
 	size_t	i;
 
-	waiting_strt = get_time();//records the time when the wait began
+	waiting_strt = get_time();
 	i = 0;
-	while((get_time() - waiting_strt) < ms)//continually checks how much time has passed since ft_wait began
+	while((get_time() - waiting_strt) < ms)
 	{
 		if (i % 200 == 0)
 		{
 			pthread_mutex_lock(&table->locks);
-			if (table->dead_or_full == 1)//true
+			if (table->dead_or_full == 1)
 			{
-				pthread_mutex_unlock(&table->locks);//it doesnt need a fork anymore
-				return (0);//stop and exit 0-because of unexpected behaviour
+				pthread_mutex_unlock(&table->locks);
+				return (0);//???
 			}
-			pthread_mutex_unlock(&table->locks);//it doesnt need a fork anymore
+			pthread_mutex_unlock(&table->locks);
 		}
 		usleep(500);
 		i++;
@@ -56,14 +58,13 @@ int	ft_wait(size_t ms, t_table *table)
 int	time_to_stop_sim(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->locks);
-	if (philo->table->dead_or_full) //1 -> true
+	if (philo->table->dead_or_full)
 	{
 		pthread_mutex_unlock(&philo->table->locks);
-		return (1); //stoping condition has been met
+		return (1); //error occures
 	}
 	pthread_mutex_unlock(&philo->table->locks);
-	return (0); //no stopping
-
+	return (0);
 }
 
 int	ft_prnt_lock(t_philo *philo, const char *activity)
@@ -72,7 +73,7 @@ int	ft_prnt_lock(t_philo *philo, const char *activity)
 	if (philo->table->dead_or_full)
 	{
 		pthread_mutex_unlock(&philo->table->locks);
-		return 0;
+		return (0);
 	}
 	printf("%zu %zu %s\n", get_time() - philo->table->start, philo->id, activity);
 	pthread_mutex_unlock(&philo->table->locks);
@@ -81,18 +82,8 @@ int	ft_prnt_lock(t_philo *philo, const char *activity)
 
 int	grab_forks(t_philo *philo)
 {
-	// check if simulation should continue
-	//	i need to lock the state before checking
-	//	need to check if dead_or_full is 0:
-	//		if its dead (0)  simulation stops -> unlock the lock and return 1 (to signal that the stopping condition has been met)
-	//		if its not tead (1) (to indicate that the stopping condition has not been met)
-	//lock the left fork
-	//check time 
-	//lock the right fork
-	// if any troubles unlock both of them
-
 	if (time_to_stop_sim(philo))// == 1
-		return (0);//we need to exit
+		return (0);
 	pthread_mutex_lock(philo->fork_l);
 	if (!ft_prnt_lock(philo, "has taken a L fork"))
 	{
@@ -151,8 +142,7 @@ int	sleeping_thinking(t_philo *philo)
 	return (1);
 }
 
-
-void	*philo_routine(void *arg) //it sould take my philo struct
+void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
@@ -161,11 +151,8 @@ void	*philo_routine(void *arg) //it sould take my philo struct
 		ft_wait(10, philo->table);
 	while (1) 
 	{
-		//grabing forks
-		//eating
-		//sleeping or thinking
-		if (!grab_forks(philo))//no success
-			break ;//something goes wrong
+		if (!grab_forks(philo))
+			break ;
 		eating_time(philo);
 		if (!sleeping_thinking(philo))
 			break ;

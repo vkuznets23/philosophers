@@ -20,18 +20,12 @@ int	ft_ctos(const char *str, size_t *result)
 	{
 		digit = *str - '0';
 		if (res > (SIZE_MAX - digit) / 10)
-		{
-			fprintf(stderr, "Overflow detected\n");
 			return (1);
-		}
 		res = res * 10 + digit;
 		str++;
 	}
 	if (*str != '\0')
-	{
-		fprintf(stderr, "Invalid input: contains non-digit characters\n");
 		return (1);
-	}
 	*result = res;
 	return (0);
 }
@@ -45,9 +39,9 @@ int	is_valid(int ac, char **av)
 	while (i < ac)
 	{
 		if (ft_ctos(av[i], &nb) != 0)
-			return (-1);
+			return (1);
 		if (nb <= 0)
-			return (-1);
+			return (1);
 		i++;
 	}
 	return (0);

@@ -12,7 +12,7 @@ int	init_forks(t_table *table)
 
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nb_philos);
 	if (!table->forks)
-		return (-1);
+		return (1);
 	i = 0;
 	while (i < table->nb_philos)
 	{
@@ -21,7 +21,7 @@ int	init_forks(t_table *table)
 			while (i > 0)
 				pthread_mutex_destroy(&table->forks[--i]);
 			free(table->forks);
-			return (-1);
+			return (1);
 		}
 		i++;
 	}
@@ -38,7 +38,7 @@ int	init_philosophers(t_table *table)
 
 	table->philos = malloc(sizeof(t_philo) * table->nb_philos);
 	if (!table->philos)
-		return (-1);
+		return (1);
 	i = 0;
 	while (i < table->nb_philos)
 	{
@@ -57,7 +57,7 @@ int	init_philosophers(t_table *table)
 int	init_table_mutexes(t_table *table)
 {
 	if (pthread_mutex_init(&table->locks, NULL) != 0)
-		return (-1);
+		return (1);
 	return (0);
 }
 
@@ -74,35 +74,32 @@ int	init_table_mutexes(t_table *table)
 int	init_table(int ac, char **av, t_table *table)
 {
 	if (ft_ctos(av[1], &table->nb_philos))
-		return (-1);
+		return (ft_usage());
 	if (ft_ctos(av[2], &table->time_to_die))
-		return (-1);
+		return (ft_usage());
 	if (ft_ctos(av[3], &table->time_to_eat))
-		return (-1);
+		return (ft_usage());
 	if (ft_ctos(av[4], &table->time_to_sleep))
-		return (-1);
-
+		return (ft_usage());
 	table->must_eat_count = 0;
 	table->no_full = 0;
 	table->dead_or_full = 0;
 	table->start = get_time();
 	if (ac == 6)
-	{
 		if (ft_ctos(av[5], &table->must_eat_count))
-			return (-1);
-	}
+			return (ft_usage());
 	if (init_forks(table) != 0)
-		return (-1);
+		return (1);
 	if (init_philosophers(table) != 0)
 	{
 		free(table->forks);
-		return (-1);
+		return (1);
 	}
 	if (init_table_mutexes(table) != 0)
 	{
 		free(table->philos);
 		free(table->forks);
-		return (-1);
+		return (1);
 	}
 	return (0);
 }
