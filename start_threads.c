@@ -32,7 +32,7 @@ int	ft_start_threads(t_table *table)
 
 int	ft_join_threads(t_table *table)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < table->nb_philos)

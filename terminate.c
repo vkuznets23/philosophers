@@ -25,7 +25,7 @@ void	ft_terminate(t_table *table)
 int	ft_usage(void)
 {
 	printf("./philo <num_philo> <die> <eat> <sleep> [must_eat]\n");
-	printf("\nnum_philo           > 0     (required)\n");
+	printf("num_philo           > 0     (required)\n");
 	printf("die                 > 0     (ms, required)\n");
 	printf("eat                 > 0     (ms, required)\n");
 	printf("sleep               > 0     (ms, required)\n");

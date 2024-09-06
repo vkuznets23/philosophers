@@ -3,6 +3,7 @@
 # define PHILO_H
 
 # include <limits.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h> 
 # include <pthread.h>
@@ -75,5 +76,8 @@ int	grab_forks(t_philo *philo);
 //terminate
 void		ft_terminate(t_table *table);
 int	ft_usage(void);
+
+//stop_threads
+void	ft_stop_simulation(t_table *table);
 
 #endif
