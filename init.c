@@ -73,16 +73,24 @@ int	init_table_mutexes(t_table *table)
 
 int	init_table(int ac, char **av, t_table *table)
 {
-	table->nb_philos = ft_atoi(av[1]);
-	table->time_to_die = ft_atoi(av[2]);
-	table->time_to_eat = ft_atoi(av[3]);
-	table->time_to_sleep = ft_atoi(av[4]);
+	if (ft_ctos(av[1], &table->nb_philos))
+		return (-1);
+	if (ft_ctos(av[2], &table->time_to_die))
+		return (-1);
+	if (ft_ctos(av[3], &table->time_to_eat))
+		return (-1);
+	if (ft_ctos(av[4], &table->time_to_sleep))
+		return (-1);
+
 	table->must_eat_count = 0;
 	table->no_full = 0;
 	table->dead_or_full = 0;
 	table->start = get_time();
 	if (ac == 6)
-		table->must_eat_count = ft_atoi(av[5]);
+	{
+		if (ft_ctos(av[5], &table->must_eat_count))
+			return (-1);
+	}
 	if (init_forks(table) != 0)
 		return (-1);
 	if (init_philosophers(table) != 0)

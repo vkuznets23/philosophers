@@ -52,7 +52,8 @@ typedef struct s_philo
 
 //parsing
 int	is_valid(int ac, char **av);
-int	ft_atoi(char *str);
+//int	ft_atoi(char *str);
+int	ft_ctos(const char *str, size_t *result);
 
 //init.c
 int	init_table(int ac, char **av, t_table *table);
