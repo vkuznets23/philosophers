@@ -6,7 +6,7 @@
 /*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 18:09:16 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 19:50:31 by viktoria         ###   ########.fr       */
+/*   Updated: 2024/09/08 20:01:43 by viktoria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,8 @@ int	init_table_mutexes(t_table *table)
 /* at line 96 I initialize table mutaxes				      */
 /* ************************************************************************** */
 
-int	init_table(int ac, char **av, t_table *table)
+static int	init_table_arguments(int ac, char **av, t_table *table)
 {
-	size_t	i;
-
-	i = 0;
 	if (ft_ctos(av[1], &table->nb_philos))
 		return (ft_usage());
 	if (ft_ctos(av[2], &table->time_to_die))
@@ -102,12 +99,22 @@ int	init_table(int ac, char **av, t_table *table)
 	if (ac == 6)
 		if (ft_ctos(av[5], &table->must_eat_count))
 			return (ft_usage());
+	return (0);
+}
+
+int	init_table(int ac, char **av, t_table *table)
+{
+	size_t	i;
+
+	i = 0;
+	if (init_table_arguments(ac, av, table) != 0)
+		return (1);
 	if (init_forks(table) != 0)
 		return (1);
 	if (init_philosophers(table) != 0)
 	{
 		while (i < table->nb_philos)
-				pthread_mutex_destroy(&table->forks[i++]);
+			pthread_mutex_destroy(&table->forks[i++]);
 		free(table->forks);
 		return (1);
 	}
