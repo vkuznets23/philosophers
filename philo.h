@@ -6,7 +6,7 @@
 /*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 18:09:54 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 20:19:33 by viktoria         ###   ########.fr       */
+/*   Updated: 2024/09/08 20:21:30 by viktoria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@
 ******************************************************************************/
 
 typedef struct s_philo	t_philo;
-
-//size_t is like unsigned int but safer and works on 64bits machines
-//it actually might be 4 bytes and 8 bytes 
-// int can be only 4 bytes
-// so size_t is safer
 
 typedef struct s_table
 {
