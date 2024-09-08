@@ -6,7 +6,7 @@
 /*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 18:09:54 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 20:11:38 by viktoria         ###   ########.fr       */
+/*   Updated: 2024/09/08 20:19:33 by viktoria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,21 @@ int		join_thread(t_table *table, int i);
 int		create_thread(t_table *table, int i);
 
 //philo_routine
-size_t	get_time(void);
 void	*philo_routine(void *arg);
 void	eating_time(t_philo *philo);
-int		ft_wait(size_t ms, t_table *table);
-int		time_to_stop_sim(t_philo *philo);
 int		ft_prnt_lock(t_philo *philo, const char *activity);
 int		grab_forks(t_philo *philo);
 
 //terminate
 void	ft_terminate(t_table *table);
 int		ft_usage(void);
+int		time_to_stop_sim(t_philo *philo);
 
 //stop_threads
 void	ft_stop_simulation(t_table *table);
+
+//utils.c
+size_t	get_time(void);
+int		ft_wait(size_t ms, t_table *table);
 
 #endif
