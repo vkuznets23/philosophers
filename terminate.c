@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   terminate.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/08 18:10:13 by viktoria          #+#    #+#             */
+/*   Updated: 2024/09/08 19:50:32 by viktoria         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philo.h"
 
@@ -20,6 +31,18 @@ void	ft_terminate(t_table *table)
 	free(table->philos);
 	free(table->forks);
 	pthread_mutex_destroy(&table->locks);
+}
+
+int	time_to_stop_sim(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->locks);
+	if (philo->table->dead_or_full)
+	{
+		pthread_mutex_unlock(&philo->table->locks);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->table->locks);
+	return (0);
 }
 
 int	ft_usage(void)

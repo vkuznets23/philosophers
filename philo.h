@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/08 18:09:54 by viktoria          #+#    #+#             */
+/*   Updated: 2024/09/08 18:23:14 by viktoria         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -31,8 +42,8 @@ typedef struct s_table
 	size_t		no_full;
 	size_t		start;
 	int			dead_or_full;
-	pthread_mutex_t		locks;
 	pthread_mutex_t		*forks;
+	pthread_mutex_t		locks;
 }	t_table;
 
 typedef struct s_philo

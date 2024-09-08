@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+         #
+#    By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/06 14:02:31 by vkuznets          #+#    #+#              #
-#    Updated: 2024/09/06 14:02:33 by vkuznets         ###   ########.fr        #
+#    Updated: 2024/09/08 19:33:58 by viktoria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = init.c \
        philo_routine.c \
        stop_threads.c \
        start_threads.c \
+       utils.c \
        terminate.c 
 
 OBJS = $(SRCS:.c=.o)

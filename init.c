@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/08 18:09:16 by viktoria          #+#    #+#             */
+/*   Updated: 2024/09/08 19:50:31 by viktoria         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philo.h"
 
@@ -73,6 +84,9 @@ int	init_table_mutexes(t_table *table)
 
 int	init_table(int ac, char **av, t_table *table)
 {
+	size_t	i;
+
+	i = 0;
 	if (ft_ctos(av[1], &table->nb_philos))
 		return (ft_usage());
 	if (ft_ctos(av[2], &table->time_to_die))
@@ -92,13 +106,14 @@ int	init_table(int ac, char **av, t_table *table)
 		return (1);
 	if (init_philosophers(table) != 0)
 	{
+		while (i < table->nb_philos)
+				pthread_mutex_destroy(&table->forks[i++]);
 		free(table->forks);
 		return (1);
 	}
 	if (init_table_mutexes(table) != 0)
 	{
-		free(table->philos);
-		free(table->forks);
+		ft_terminate(table);
 		return (1);
 	}
 	return (0);
