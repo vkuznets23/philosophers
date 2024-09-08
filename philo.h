@@ -6,7 +6,7 @@
 /*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 18:09:54 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 20:21:30 by viktoria         ###   ########.fr       */
+/*   Updated: 2024/09/08 20:22:02 by viktoria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_philo
 
 //parsing
 int		is_valid(int ac, char **av);
-//int	ft_atoi(char *str);
 int		ft_ctos(const char *str, size_t *result);
 
 //init.c
