@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   start_threads.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:10:00 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 18:10:01 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:30:13 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:30:23 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
 
 /* ************************************************************************** */
 /*  When you create threads using pthread_create, they run concurrently,      */

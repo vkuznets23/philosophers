@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+         #
+#    By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/06 14:02:31 by vkuznets          #+#    #+#              #
-#    Updated: 2024/09/08 19:33:58 by viktoria         ###   ########.fr        #
+#    Created: 2024/09/09 11:28:06 by vkuznets          #+#    #+#              #
+#    Updated: 2024/09/09 11:29:29 by vkuznets         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

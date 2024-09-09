@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:10:24 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 18:10:25 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:31:02 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:46:46 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/* ************************************************************************** */
-/* Philosophers' routine consist of:                                          */
-/* 	eating (for this they need to grab a fork)                            */
-/*	sleaping                                                              */
-/*	thinking                                                              */
-/* ************************************************************************** */
 
 //This function returns the current time in milliseconds
 size_t	get_time(void)
@@ -31,7 +24,7 @@ size_t	get_time(void)
 /* ************************************************************************** */
 /* This function waits for a specified number of milliseconds (ms)            */
 /* while periodically checking whether the philosopher's state has changed    */
-/* to "dead" or "full". If the philosopher is dead or full, it stops early    */
+/* to "dead" or "full". If the philosopher is dead or full, simulation  stops */
 /*									      */
 /* waiting_strt records the time when waiting began 			      */
 /* while loop (get_time() - waiting_strt) < ms continually checks             */

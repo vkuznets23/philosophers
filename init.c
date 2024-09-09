@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:09:16 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 20:01:43 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:27:37 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:36:34 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /* ************************************************************************** */
-/*  If statement at the line 19 checkes if i need clean up mutexes and        */
+/*  If statement at the line 30 checkes if i need clean up mutexes and        */
 /*  free space								      */
 /* ************************************************************************** */
 
@@ -74,12 +74,9 @@ int	init_table_mutexes(t_table *table)
 
 /* ************************************************************************** */
 /* init_table:   							      */
-/* 	Initializes the "dining table", the data structure containing all of  */
+/* Initializes the "dining table", the data structure containing all of       */
 /* the program's parameters. Returns a pointer to the allocated table         */
 /* structure, or NULL if an error occured during initialization.              */
-/* at line 83 I initialize forks 					      */
-/* at line 89 i initialize philosophers					      */
-/* at line 96 I initialize table mutaxes				      */
 /* ************************************************************************** */
 
 static int	init_table_arguments(int ac, char **av, t_table *table)

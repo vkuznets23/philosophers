@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stop_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:10:06 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 18:10:07 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:30:34 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:45:20 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 /* ************************************************************************** */
 /* This function checks if the simulations should stop.                       */
 /*									      */
-/* Its an infinity loop within we go through each of the philo (line 20)      */
+/* Its an infinity loop within we go through each of the philo (line 31)      */
 /* get_time() is absolute time value; to get current time inside the          */
-/* simulation we need to do math.                                             */
+/* simulation we need to substract each philo's lst.eating (that's why [i]    */
+/* from get_time     							      */
 /* we need mutex to lock the acces to the table->dead_or_full                 */
 /* ************************************************************************** */
 

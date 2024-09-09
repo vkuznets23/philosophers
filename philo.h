@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:09:54 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 20:22:02 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:27:22 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:27:28 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <limits.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h> 

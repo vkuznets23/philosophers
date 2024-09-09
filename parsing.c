@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:09:35 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 18:09:37 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:29:39 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:39:17 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /* ************************************************************************** */
-/* skip whitespaces -> iterate through each char of the string                */
-/* -> convert char to corresponding number -> check for overflow              */
+/* Function convert char *str to size_t because we need to covert av params   */
+/* for protection we have a check for overflow at line 33                     */
 /* check if there are any non digit characters after parsing                  */
 /* Assign the result to the provided pointer                                  */
 /* ************************************************************************** */

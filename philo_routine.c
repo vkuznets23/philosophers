@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:09:46 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 18:09:49 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:30:01 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:46:59 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/* ************************************************************************** */
+/* Philosophers' routine consist of:                                          */
+/* 	eating (for this they need to grab a fork)                            */
+/*	sleaping                                                              */
+/*	thinking                                                              */
+/* ************************************************************************** */
 
 int	ft_prnt_lock(t_philo *philo, const char *activity)
 {
@@ -52,12 +59,9 @@ int	grab_forks(t_philo *philo)
 }
 
 /* ************************************************************************** */
-/* first i need to lock philo's state, then calculate how many of them have   */
-/* already eatten. Then i take the time when philos last ate. After that show */
-/* current status "eating" and simulate eating tim eusing wait.               */
-/* if statement is used to calculate how many of then are full (to stop simul)*/
-/* After that we need to unlock state mutax and forks mutaxes since this      */
-/* phase is done.							      */
+/* Function simulate eating process.					      */
+/* If statement check if everyone has eatten, then  we need to increment      */
+/* no_full param							      */
 /* ************************************************************************** */
 
 void	eating_time(t_philo *philo)

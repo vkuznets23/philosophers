@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 18:09:29 by viktoria          #+#    #+#             */
-/*   Updated: 2024/09/08 19:55:53 by viktoria         ###   ########.fr       */
+/*   Created: 2024/09/09 11:27:51 by vkuznets          #+#    #+#             */
+/*   Updated: 2024/09/09 11:36:56 by vkuznets         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int	main(int ac, char **av)
 	if (is_valid(ac, av))
 		return (ft_usage());
 	if (init_table(ac, av, &table) != 0)
-		return (-1);
+		return (1);
 	if (ft_start_threads(&table))
 	{
 		ft_terminate(&table);
-		return (-1);
+		return (1);
 	}
 	ft_stop_simulation(&table);
 	if (ft_join_threads(&table))
 	{
 		ft_terminate(&table);
-		return (-1);
+		return (1);
 	}
 	ft_terminate(&table);
 	return (0);
