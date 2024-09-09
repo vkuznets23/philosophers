@@ -51,8 +51,6 @@ int	is_valid(int ac, char **av)
 	{
 		if (ft_ctos(av[i], &nb) != 0)
 			return (1);
-		if (nb <= 0)
-			return (1);
 		i++;
 	}
 	return (0);

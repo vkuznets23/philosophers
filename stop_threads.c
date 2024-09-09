@@ -38,9 +38,9 @@ void	ft_stop_simulation(t_table *table)
 			{
 				table->dead_or_full = 1;
 				if (table->no_full == table->nb_philos)
-					printf("Each philo ate %ld times\n", table->must_eat_count);
+					printf("Each philo ate %zu times\n", table->must_eat_count);
 				else
-					printf("%zu %ld died\n", get_time() - table->start, i + 1);
+					printf("%zu %zu died\n", get_time() - table->start, i + 1);
 				pthread_mutex_unlock(&table->locks);
 				return ;
 			}
