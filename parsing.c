@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuznets <vkuznets@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: viktoria <viktoria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:29:39 by vkuznets          #+#    #+#             */
-/*   Updated: 2024/09/09 11:39:17 by vkuznets         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:04:25 by viktoria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	is_valid(int ac, char **av)
 	while (i < ac)
 	{
 		if (ft_ctos(av[i], &nb) != 0)
+			return (1);
+		if (nb == 0)
 			return (1);
 		i++;
 	}
