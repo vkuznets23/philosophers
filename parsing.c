@@ -37,6 +37,8 @@ int	ft_ctos(const char *str, size_t *result)
 	}
 	if (*str != '\0')
 		return (1);
+	if (res > (size_t)INT_MAX)
+		return (1);
 	*result = res;
 	return (0);
 }
