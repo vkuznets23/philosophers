@@ -32,16 +32,15 @@ int	ft_start_threads(t_table *table)
 	i = 0;
 	while (i < table->nb_philos)
 	{
-		if (pthread_create(&table->philos[i].thread, NULL,
+		if ((pthread_create(&table->philos[i].thread, NULL,
 				&philo_routine, &table->philos[i]) != 0)
+				|| (i = 3))
 		{
+			pthread_mutex_lock(&table->locks);
+			table->dead_or_full = 1;
+			pthread_mutex_unlock(&table->locks);
 			while (i > 0)
-			{
-				pthread_mutex_lock(&table->locks);
-				table->dead_or_full = 1;
-				pthread_mutex_unlock(&table->locks);
 				pthread_join(table->philos[--i].thread, NULL);
-			}
 			return (1);
 
 		}
