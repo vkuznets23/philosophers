@@ -117,7 +117,11 @@ int	init_table(int ac, char **av, t_table *table)
 	}
 	if (init_table_mutexes(table) != 0)
 	{
-		ft_terminate(table);
+		//ft_terminate(table);
+		while (i < table->nb_philos)
+			pthread_mutex_destroy(&table->forks[i++]);
+		free(table->forks);
+		free(table->philos);
 		return (1);
 	}
 	return (0);
